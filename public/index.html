@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#1a1b1e" />
+    <meta
+      name="description"
+      content="A local, token-based Discord web client."
+    />
+    <title>Discord Web Client</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div id="login-view" class="login-view">
+      <div class="login-glow login-glow-one" aria-hidden="true"></div>
+      <div class="login-glow login-glow-two" aria-hidden="true"></div>
+
+      <main class="login-card">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 127.14 96.36" role="img">
+              <path
+                fill="currentColor"
+                d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.33 2.67-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.67 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.96-72.15ZM42.45 65.69C36.18 65.69 31 59.92 31 52.84S36.07 40 42.45 40 53.93 45.82 53.82 52.84 48.83 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 59.92 73.25 52.84S78.32 40 84.69 40s11.48 5.82 11.37 12.84-5 12.85-11.37 12.85Z"
+              />
+            </svg>
+          </span>
+          <span>Discord Web</span>
+        </div>
+
+        <h1>Welcome back</h1>
+        <p class="login-subtitle">
+          Sign in with your Discord account token to open your servers and
+          messages.
+        </p>
+
+        <form id="login-form" novalidate>
+          <label class="field-label" for="token-input">Account token</label>
+          <div class="token-field">
+            <input
+              id="token-input"
+              name="token"
+              type="password"
+              placeholder="Paste your Discord token"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              required
+            />
+            <button
+              id="toggle-token"
+              class="icon-button token-visibility"
+              type="button"
+              aria-label="Show token"
+              title="Show token"
+            >
+              <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 5C6.5 5 2.1 8.6 1 12c1.1 3.4 5.5 7 11 7s9.9-3.6 11-7c-1.1-3.4-5.5-7-11-7Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-2.2a1.8 1.8 0 1 0 0-3.6 1.8 1.8 0 0 0 0 3.6Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M3.3 2 2 3.3l18.7 18.7 1.3-1.3L3.3 2Zm8.7 3c5.5 0 9.9 3.6 11 7a12.8 12.8 0 0 1-3.3 4.3l-2.6-2.6A4 4 0 0 0 11.2 9L9.1 6.9c.9-.3 1.9-.5 2.9-.5Zm0 13c-5.5 0-9.9-3.6-11-7 1-3.1 4.5-6.3 9.2-6.9l2.1 2.1a4 4 0 0 0 5.1 5.1l2 2c-2.1 2.9-5.1 4.7-7.4 4.7Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </div>
+          <p id="login-error" class="form-error" role="alert" hidden></p>
+          <button id="login-button" class="primary-button" type="submit">
+            <span id="login-button-label">Log in</span>
+            <span id="login-spinner" class="spinner" hidden aria-hidden="true"></span>
+          </button>
+        </form>
+
+        <p class="save-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M17 9V7a5 5 0 0 0-10 0v2H5v13h14V9h-2ZM9 7a3 3 0 0 1 6 0v2H9V7Zm8 13H7V11h10v9Zm-4-6a2 2 0 1 0-1 1.7V18h2v-2.3A2 2 0 0 0 13 14Z"
+              fill="currentColor"
+            />
+          </svg>
+          Your token is saved in this browser's localStorage so you stay signed in.
+        </p>
+
+        <aside class="login-warning">
+          <strong>Use at your own risk.</strong> This is an unofficial client.
+          Logging in with an account token is not supported by Discord and can
+          violate its Terms of Service, including account termination. Never
+          share your token with anyone.
+        </aside>
+      </main>
+
+      <footer class="login-footer">
+        Runs locally · Your token is sent only to your local server and Discord
+      </footer>
+    </div>
+
+    <div id="app-view" class="app-view" hidden>
+      <nav class="server-rail" aria-label="Servers">
+        <button
+          id="home-button"
+          class="rail-button rail-home"
+          type="button"
+          title="Direct Messages"
+          aria-label="Direct Messages"
+          aria-current="true"
+        >
+          <span class="home-icon" aria-hidden="true">
+            <svg viewBox="0 0 127.14 96.36">
+              <path
+                fill="currentColor"
+                d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.33 2.67-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.67 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.96-72.15ZM42.45 65.69C36.18 65.69 31 59.92 31 52.84S36.07 40 42.45 40 53.93 45.82 53.82 52.84 48.83 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 59.92 73.25 52.84S78.32 40 84.69 40s11.48 5.82 11.37 12.84-5 12.85-11.37 12.85Z"
+              />
+            </svg>
+          </span>
+        </button>
+        <div class="rail-divider" aria-hidden="true"></div>
+        <div id="guild-list" class="guild-list"></div>
+        <div class="rail-spacer"></div>
+        <div class="rail-status" id="rail-status" title="Connecting…">
+          <span class="status-dot"></span>
+        </div>
+      </nav>
+
+      <aside class="channel-sidebar" aria-label="Channels">
+        <div class="sidebar-header">
+          <h2 id="sidebar-title">Direct Messages</h2>
+          <span id="connection-pill" class="connection-pill" title="Gateway status">
+            <span class="status-dot"></span>
+            <span id="connection-label">Connecting</span>
+          </span>
+        </div>
+        <div id="channel-list" class="channel-list"></div>
+        <div class="account-panel">
+          <span id="account-avatar" class="avatar avatar-32 avatar-fallback">?</span>
+          <div class="account-details">
+            <span id="account-name" class="account-name">Connecting…</span>
+            <span id="account-handle" class="account-handle"></span>
+          </div>
+          <button
+            id="logout-button"
+            class="icon-button account-logout"
+            type="button"
+            title="Log out"
+            aria-label="Log out"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M16 17v-3H9v-4h7V7l5 5-5 5ZM14 2a2 2 0 0 1 2 2v2h-2V4H5v16h9v-2h2v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9Z"
+              />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <main class="chat-panel">
+        <div id="chat-empty" class="chat-empty">
+          <div class="empty-mark" aria-hidden="true">
+            <svg viewBox="0 0 127.14 96.36">
+              <path
+                fill="currentColor"
+                d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.33 2.67-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.67 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.96-72.15ZM42.45 65.69C36.18 65.69 31 59.92 31 52.84S36.07 40 42.45 40 53.93 45.82 53.82 52.84 48.83 65.69 42.45 65.69Zm42.24 0C78.41 65.69 73.25 59.92 73.25 52.84S78.32 40 84.69 40s11.48 5.82 11.37 12.84-5 12.85-11.37 12.85Z"
+              />
+            </svg>
+          </div>
+          <h1 id="empty-title">Welcome back</h1>
+          <p id="empty-text">
+            Choose a server or a direct message from the sidebar to start
+            chatting.
+          </p>
+          <div class="empty-hints">
+            <span><kbd>Enter</kbd> to send</span>
+            <span><kbd>Shift</kbd> + <kbd>Enter</kbd> for a new line</span>
+          </div>
+        </div>
+
+        <div id="chat-active" class="chat-active" hidden>
+          <header class="chat-header">
+            <button
+              id="mobile-back"
+              class="icon-button mobile-back"
+              type="button"
+              aria-label="Back to channels"
+              title="Back"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20v-2Z"
+                />
+              </svg>
+            </button>
+            <span id="chat-channel-icon" class="channel-hash" aria-hidden="true">#</span>
+            <div class="chat-heading">
+              <h1 id="chat-title">channel</h1>
+              <p id="chat-topic" class="chat-topic"></p>
+            </div>
+            <span id="chat-status" class="chat-status" title="Gateway connected">
+              <span class="status-dot"></span>
+              <span id="chat-status-label">Live</span>
+            </span>
+          </header>
+
+          <div id="message-scroll" class="message-scroll">
+            <div class="load-older-wrap" id="load-older-wrap" hidden>
+              <button id="load-older-button" class="load-older-button" type="button">
+                Load older messages
+              </button>
+            </div>
+            <div id="message-list" class="message-list" role="log" aria-live="polite"></div>
+            <div id="message-loading" class="message-loading" hidden>
+              <span class="spinner"></span>
+              <span>Loading messages…</span>
+            </div>
+            <div id="channel-end" class="channel-end" hidden>
+              <span id="channel-end-label">This is the beginning of the conversation.</span>
+            </div>
+          </div>
+
+          <div id="jump-bottom-wrap" class="jump-bottom-wrap" hidden>
+            <button id="jump-bottom" class="jump-bottom" type="button">
+              Jump to present
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="m12 16-6-6 1.4-1.4 4.6 4.6 4.6-4.6L18 10l-6 6Z" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="typing-bar" class="typing-bar" aria-live="polite">
+            <span class="typing-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+            <span id="typing-text"></span>
+          </div>
+
+          <div id="reply-bar" class="reply-bar" hidden>
+            <div class="reply-copy">
+              <span class="reply-label">Replying to <strong id="reply-author"></strong></span>
+              <span id="reply-preview" class="reply-preview"></span>
+            </div>
+            <button
+              id="cancel-reply"
+              class="icon-button"
+              type="button"
+              aria-label="Cancel reply"
+              title="Cancel reply"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M18.3 5.7 12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7l1.4-1.4 6.3 6.3 6.3-6.3 1.4 1.4Z"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <form id="composer" class="composer">
+            <div class="composer-box">
+              <textarea
+                id="message-input"
+                rows="1"
+                maxlength="2000"
+                placeholder="Message"
+                aria-label="Message"
+                spellcheck="true"
+              ></textarea>
+              <button
+                id="send-button"
+                class="send-button"
+                type="submit"
+                title="Send message"
+                aria-label="Send message"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M2.4 20.4 22 12 2.4 3.6 2.3 10l14 2-14 2 .1 6.4Z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="composer-meta">
+              <span id="composer-hint">Press Enter to send</span>
+              <span id="char-count" class="char-count"></span>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+    <noscript>
+      <div class="noscript">This app requires JavaScript.</div>
+    </noscript>
+  </body>
+</html>
